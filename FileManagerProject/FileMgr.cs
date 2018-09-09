@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FileManagerProject
 {
@@ -246,5 +249,27 @@ namespace FileManagerProject
             return files.FindAll(i => i.parId == id).Select(i => i.id).ToList();
         }
 
+        public void save(string file)
+        {
+            Stream fStream = new FileStream(file, FileMode.Create, FileAccess.ReadWrite);
+            BinaryFormatter binFormat = new BinaryFormatter();//创建二进制序列化器
+            Hashtable hash = new Hashtable();
+            hash.Add("files", files);
+            hash.Add("dirs", dirs);
+            hash.Add("tags", tags);
+            hash.Add("tagPairs", tagPairs);
+            binFormat.Serialize(fStream, hash);
+        }
+        public void load(string file)
+        {
+            Hashtable hash = new Hashtable();
+            Stream fStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            BinaryFormatter binFormat = new BinaryFormatter();//创建二进制序列化器
+            hash = (Hashtable)binFormat.Deserialize(fStream);//反序列化对象
+            files = (List<FileItem>)hash["files"];
+            dirs = (List<DirItem>)hash["dirs"];
+            tags = (List<TagItem>)hash["tags"];
+            tagPairs = (List<TagPair>)hash["tagPairs"];
+        }
     }
 }

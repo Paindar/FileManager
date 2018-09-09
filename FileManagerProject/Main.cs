@@ -27,8 +27,14 @@ namespace FileManagerProject
                         tags += tag.name + ' ';
                     }
                     int index = this.dataGridView1.Rows.Add(new string[] { file.name, tags });
+                    //this.dataGridView1.Rows[index].DefaultCellStyle.BackColor = System.Drawing.Color.Transparent;
                 }
             }
+        }
+
+        private void MainWindow_Load(object sender, System.EventArgs e)
+        {
+
         }
     }
     class DirNode : TreeNode
