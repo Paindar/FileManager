@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace FileManagerProject
 {
-    class DirItem
+    [Serializable]
+    class DirItem : ISerializable
     {
         public int id { get; }
         public string name { get; set; }
@@ -17,8 +21,21 @@ namespace FileManagerProject
             this.name = name;
             this.parId = parId;
         }
+        protected DirItem(SerializationInfo info, StreamingContext context)
+        {
+            id = info.GetInt32("id");
+            name = info.GetString("name");
+            parId = info.GetInt32("parId");
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("name", name);
+            info.AddValue("parId", parId);
+        }
     }
-    class FileItem
+    [Serializable]
+    class FileItem : ISerializable
     {
         public int id { get; }
         public string name { get; set; }
@@ -29,8 +46,21 @@ namespace FileManagerProject
             this.name = name;
             this.parId = parId;
         }
+        protected FileItem(SerializationInfo info, StreamingContext context)
+        {
+            id = info.GetInt32("id");
+            name = info.GetString("name");
+            parId = info.GetInt32("parId");
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("name", name);
+            info.AddValue("parId", parId);
+        }
     }
-    class TagItem
+    [Serializable]
+    class TagItem : ISerializable
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -39,8 +69,20 @@ namespace FileManagerProject
             this.id = id;
             this.name = name;
         }
+        protected TagItem(SerializationInfo info, StreamingContext context)
+        {
+            id = info.GetInt32("id");
+            name = info.GetString("name");
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("name", name);
+        }
+
     }
-    class TagPair
+    [Serializable]
+    class TagPair : ISerializable
     {
         public int fileId { get; set; }
         public int tagId { get; set; }
@@ -49,7 +91,18 @@ namespace FileManagerProject
             this.fileId = fileId;
             this.tagId = tagId;
         }
+        protected TagPair(SerializationInfo info, StreamingContext context)
+        {
+            fileId = info.GetInt32("fileId");
+            tagId = info.GetInt32("tagId");
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("fileId", fileId);
+            info.AddValue("tagId", tagId);
+        }
     }
+
     class FileMgr
     {
         public static FileMgr fileMgr = null;
@@ -248,6 +301,48 @@ namespace FileManagerProject
         {
             return files.FindAll(i => i.parId == id).Select(i => i.id).ToList();
         }
+        public bool removeTagFromFile(int fileId, int tagId)
+        {
+            var temp = tags;
+            var temp1 = tagPairs;
+            return tagPairs.RemoveAll(p => { return p.fileId == fileId && p.tagId == tagId; })>0;
+        }
+        public bool removeTagFromFile(int fileId, string tag)
+        {
+            int index = tags.FindIndex(i => i.name.Equals(tag));
+            if(index!=-1)
+            {
+                int tagId = tags[index].id;
+                return removeTagFromFile(fileId, tagId);
+            }
+            return false;
+        }
+        public bool renameFile(int fileId, string newName)
+        {
+            FileItem item = files.Find(f => f.id == fileId);
+            if(item.name.Count()==0)
+            {
+                return false;
+            }
+            else
+            {
+                return renameFile(item, newName);
+            }
+        }
+        public bool renameFile(FileItem item, string newName)
+        {
+            string dirPath = getDirPath(item.parId);
+            try
+            {
+                File.Move(dirPath + '/' + item.name, dirPath + "/" + newName);
+            }
+            catch(Exception e)
+            {
+                //TODO Msg report.
+                return false;
+            }
+            return true;
+        }
 
         public void save(string file)
         {
@@ -257,8 +352,11 @@ namespace FileManagerProject
             hash.Add("files", files);
             hash.Add("dirs", dirs);
             hash.Add("tags", tags);
+            MessageBox.Show(string.Join(" ", tags.Select(p => p.name)));
+
             hash.Add("tagPairs", tagPairs);
             binFormat.Serialize(fStream, hash);
+            fStream.Close();
         }
         public void load(string file)
         {
@@ -270,6 +368,7 @@ namespace FileManagerProject
             dirs = (List<DirItem>)hash["dirs"];
             tags = (List<TagItem>)hash["tags"];
             tagPairs = (List<TagPair>)hash["tagPairs"];
+            fStream.Close();
         }
     }
 }

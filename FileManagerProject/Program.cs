@@ -21,11 +21,19 @@ namespace FileManagerProject
             Application.SetCompatibleTextRenderingDefault(false);
             mainWindow = new MainWindow();
             FileMgr.fileMgr = new FileMgr(rootPath);
-            initialize(new DirectoryInfo(rootPath), 0);
+            if(File.Exists(Application.StartupPath + "/dir.dat"))
+            {
+                FileMgr.fileMgr.load(Application.StartupPath + "/dir.dat");
+            }
+            else
+            {
+                initialize(new DirectoryInfo(rootPath), 0);
+            }
             DirNode rootNode = new DirNode(FileMgr.fileMgr.getDirItem(0));
             mainWindow.fileTree.Nodes.Add(rootNode);
             initDirsData(0, rootNode);
             Application.Run(mainWindow);
+            FileMgr.fileMgr.save(Application.StartupPath + "/dir.dat");
         }
         public static void initialize(DirectoryInfo path, int dirId)
         {
