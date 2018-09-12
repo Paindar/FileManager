@@ -26,7 +26,7 @@ namespace FileManagerProject
                 {
                     int index = this.dataGridView1.Rows.Add(new FileDataGridViewRow());
                     if (this.dataGridView1.Rows[index] is FileDataGridViewRow)
-                        (this.dataGridView1.Rows[index] as FileDataGridViewRow).set(file, FileMgr.fileMgr.getFileTags(file.id).Select(tag => tag.name).ToArray());
+                        (this.dataGridView1.Rows[index] as FileDataGridViewRow).set(file);
                 }
             }
         }
@@ -76,8 +76,25 @@ namespace FileManagerProject
 
             delDatas.Select(tag => FileMgr.fileMgr.removeTagFromFile(fileId, tag));
             newDatas.Select(tag => FileMgr.fileMgr.addTag(fileId, tag));
-            MessageBox.Show(string.Join(" ", result.Select(b=>b.ToString())));
 
+        }
+
+        private void dataGridView1_Paint(object sender, PaintEventArgs e)
+        {
+            if(this.dataGridView1.Visible)
+            {
+                foreach(var r in this.dataGridView1.Rows)
+                {
+                    if(r is FileDataGridViewRow)
+                    {
+                        FileDataGridViewRow fd = r as FileDataGridViewRow;
+                        if (fd.Displayed)
+                        {
+                            fd.update();
+                        }
+                    }
+                }
+            }
         }
     }
     class DirNode : TreeNode
@@ -93,14 +110,24 @@ namespace FileManagerProject
     class FileDataGridViewRow : DataGridViewRow
     {
         public FileItem info = null;
+        private bool isUpdated = false;
         public FileDataGridViewRow()
         {
 
         }
-        public void set(FileItem item, params string[] tags)
+        public void set(FileItem item)
         {
             this.info = item;
-            this.SetValues(item.name, string.Join(" ", tags));
+        }
+        public void update()
+        {
+            if(isUpdated==false)
+            {
+                List<string> tags = FileMgr.fileMgr.getFileTags(info.id);
+                this.Cells[0].Value = info.name;
+                this.Cells[1].Value = string.Join(" ", tags);
+                isUpdated = true;
+            }
         }
     }
 }

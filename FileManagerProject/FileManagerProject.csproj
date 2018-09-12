@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileMgr.cs" />
+    <Compile Include="GridDataViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GridDataViewEx.Designer.cs">
+      <DependentUpon>GridDataViewEx.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GridDataViewEx.resx">
+      <DependentUpon>GridDataViewEx.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

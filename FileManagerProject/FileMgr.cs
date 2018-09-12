@@ -284,7 +284,12 @@ namespace FileManagerProject
                 return tagPairs.FindAll(i => i.tagId == index).Select(i => i.fileId).ToList(); ;
             return new List<int>();
         }
-        public List<TagItem> getFileTags(int id)
+        public List<string> getFileTags(int id)
+        {
+            return tagPairs.FindAll(i => i.fileId == id)
+                .Select(pair => tags.Find(tag => tag.id == pair.tagId).name).ToList();
+        }
+        public List<TagItem> getFileTagsId(int id)
         {
             return tagPairs.FindAll(i => i.fileId == id)
                 .Select(pair=>tags.Find(tag=>tag.id==pair.tagId)).ToList();
@@ -303,8 +308,6 @@ namespace FileManagerProject
         }
         public bool removeTagFromFile(int fileId, int tagId)
         {
-            var temp = tags;
-            var temp1 = tagPairs;
             return tagPairs.RemoveAll(p => { return p.fileId == fileId && p.tagId == tagId; })>0;
         }
         public bool removeTagFromFile(int fileId, string tag)
