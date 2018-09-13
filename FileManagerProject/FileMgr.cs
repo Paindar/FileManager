@@ -355,7 +355,6 @@ namespace FileManagerProject
             hash.Add("files", files);
             hash.Add("dirs", dirs);
             hash.Add("tags", tags);
-            MessageBox.Show(string.Join(" ", tags.Select(p => p.name)));
 
             hash.Add("tagPairs", tagPairs);
             binFormat.Serialize(fStream, hash);

@@ -14,6 +14,7 @@ namespace FileManagerProject
         public MainWindow()
         {
             InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void fileTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -22,12 +23,8 @@ namespace FileManagerProject
             {
                 this.dataGridView1.Rows.Clear();
                 List<FileItem> files = FileMgr.fileMgr.getFiles(((DirNode)e.Node).info.id);
-                foreach (var file in files)
-                {
-                    int index = this.dataGridView1.Rows.Add(new FileDataGridViewRow());
-                    if (this.dataGridView1.Rows[index] is FileDataGridViewRow)
-                        (this.dataGridView1.Rows[index] as FileDataGridViewRow).set(file);
-                }
+                FileDataGridViewRow[] rows = files.Select(f => new FileDataGridViewRow().set(f)).ToArray();
+                this.dataGridView1.Rows.AddRange(rows);
             }
         }
 
@@ -111,22 +108,26 @@ namespace FileManagerProject
     {
         public FileItem info = null;
         private bool isUpdated = false;
-        public FileDataGridViewRow()
-        {
-
-        }
-        public void set(FileItem item)
+        public FileDataGridViewRow(){}
+        public FileDataGridViewRow set(FileItem item)
         {
             this.info = item;
+            return this;
         }
         public void update()
         {
             if(isUpdated==false)
             {
-                List<string> tags = FileMgr.fileMgr.getFileTags(info.id);
-                this.Cells[0].Value = info.name;
-                this.Cells[1].Value = string.Join(" ", tags);
                 isUpdated = true;
+                Thread t = new Thread(obj => {
+                    FileDataGridViewRow fd = obj as FileDataGridViewRow;
+                    fd.Cells[0].Value = info.name;
+                    List<string> tags = FileMgr.fileMgr.getFileTags(info.id);
+                    string tagInfo = string.Join(" ", tags);
+                    fd.Cells[1].Value = tagInfo;
+                });
+                t.IsBackground = true;
+                t.Start(this);
             }
         }
     }
