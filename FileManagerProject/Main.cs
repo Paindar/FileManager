@@ -11,10 +11,19 @@ namespace FileManagerProject
     public partial class MainWindow : Form
     {
         Hashtable hash = new Hashtable();
+        Thread threadPreWin = new Thread(obj =>
+        {
+            PreviewWindow preWin = new PreviewWindow();
+            (obj as MainWindow).dataGridView1.RowEnter += preWin.onPreview;
+        })
+        {
+            IsBackground = true
+        };
         public MainWindow()
         {
             InitializeComponent();
             Control.CheckForIllegalCrossThreadCalls = false;
+            threadPreWin.Start(this);
         }
 
         private void fileTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -23,7 +32,13 @@ namespace FileManagerProject
             {
                 this.dataGridView1.Rows.Clear();
                 List<FileItem> files = FileMgr.fileMgr.getFiles(((DirNode)e.Node).info.id);
-                FileDataGridViewRow[] rows = files.Select(f => new FileDataGridViewRow().set(f)).ToArray();
+                FileDataGridViewRow[] rows = files.Select(f =>
+                {
+                    var res = new FileDataGridViewRow();
+                    res.CreateCells(dataGridView1, f.name);
+                    res.set(f);
+                    return res;
+                }).ToArray();
                 this.dataGridView1.Rows.AddRange(rows);
             }
         }
@@ -43,7 +58,7 @@ namespace FileManagerProject
             {
                 if (sender is FileDataGridViewRow == false)
                 {
-                    throw new ArgumentException("Argument sender is not type FileDataGridViewRow.");
+                    return;//throw new ArgumentException("Argument sender is not type FileDataGridViewRow.");
                 }
                 FileDataGridViewRow data = (sender as FileDataGridViewRow);
                 string newData = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -93,6 +108,7 @@ namespace FileManagerProject
                 }
             }
         }
+        
     }
     class DirNode : TreeNode
     {
@@ -119,14 +135,16 @@ namespace FileManagerProject
             if(isUpdated==false)
             {
                 isUpdated = true;
-                Thread t = new Thread(obj => {
+                Thread t = new Thread(obj =>
+                {
                     FileDataGridViewRow fd = obj as FileDataGridViewRow;
-                    fd.Cells[0].Value = info.name;
                     List<string> tags = FileMgr.fileMgr.getFileTags(info.id);
                     string tagInfo = string.Join(" ", tags);
                     fd.Cells[1].Value = tagInfo;
-                });
-                t.IsBackground = true;
+                })
+                {
+                    IsBackground = true
+                };
                 t.Start(this);
             }
         }
