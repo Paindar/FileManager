@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace FileManagerProject
 {
     static class Program
     {
-        static string rootPath = "E:\\GDriver";
+        static string rootPath = "E:/GDriver";
         static MainWindow mainWindow;
         /// <summary>
         /// 应用程序的主入口点。
@@ -17,6 +18,12 @@ namespace FileManagerProject
         [STAThread]
         static void Main()
         {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            // handle UI exceptions
+            Application.ThreadException += Application_ThreadException;
+            // handle non-UI exceptions
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Application.ApplicationExit += Application_ApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             mainWindow = new MainWindow();
@@ -33,7 +40,6 @@ namespace FileManagerProject
             mainWindow.fileTree.Nodes.Add(rootNode);
             initDirsData(0, rootNode);
             Application.Run(mainWindow);
-            FileMgr.fileMgr.save(Application.StartupPath + "/dir.dat");
         }
         public static void initialize(DirectoryInfo path, int dirId)
         {
@@ -56,6 +62,27 @@ namespace FileManagerProject
                 node.Nodes.Add(subNode);
                 initDirsData(subDir.id, subNode);
             }
+        }
+        public static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            string errorMsg = $"Exception Detail: {Environment.NewLine}{e.Exception}";
+            MessageBox.Show(
+                    $"Unexpected error, shadowsocks will exit. Please report to {Environment.NewLine}{errorMsg}",
+                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            string errMsg = e.ExceptionObject.ToString();
+            MessageBox.Show(
+                    $"Unexpected error, shadowsocks will exit. Please report to {Environment.NewLine}{errMsg}",
+                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private static void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            // detach static event handlers
+            Application.ApplicationExit -= Application_ApplicationExit;
+            Application.ThreadException -= Application_ThreadException;
+            FileMgr.fileMgr.save(Application.StartupPath + "/dir.dat");
         }
     }
 }
