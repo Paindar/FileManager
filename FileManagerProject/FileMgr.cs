@@ -266,6 +266,10 @@ namespace FileManagerProject
         {
             return dirs.Find(i => i.id == id);
         }
+        public FileItem getFile(int fileId)
+        {
+             return files.Find(i => i.id == fileId);
+        }
         public string getFilePath(int id)
         {
             int index = files.FindIndex(i => i.id == id);

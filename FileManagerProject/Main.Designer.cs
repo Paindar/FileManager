@@ -33,47 +33,53 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.fileTree = new System.Windows.Forms.TreeView();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.explorerLayout = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new FileManagerProject.GridDataViewEx();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.borderLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.addrLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.addrLineText = new System.Windows.Forms.TextBox();
+            this.searchText = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).BeginInit();
+            this.explorerLayout.Panel1.SuspendLayout();
+            this.explorerLayout.Panel2.SuspendLayout();
+            this.explorerLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.borderLayoutPanel.SuspendLayout();
+            this.addrLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileTree
             // 
             this.fileTree.BackColor = System.Drawing.Color.White;
             this.fileTree.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.fileTree.Dock = System.Windows.Forms.DockStyle.Left;
             this.fileTree.ForeColor = System.Drawing.Color.Black;
+            this.fileTree.LineColor = System.Drawing.Color.Maroon;
             this.fileTree.Location = new System.Drawing.Point(0, 0);
             this.fileTree.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.fileTree.Name = "fileTree";
-            this.fileTree.Size = new System.Drawing.Size(190, 637);
+            this.fileTree.Size = new System.Drawing.Size(190, 583);
             this.fileTree.TabIndex = 0;
             this.fileTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.fileTree_NodeMouseClick);
             // 
-            // splitContainer1
+            // explorerLayout
             // 
-            this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            this.explorerLayout.BackColor = System.Drawing.Color.Transparent;
+            this.explorerLayout.Location = new System.Drawing.Point(3, 39);
+            this.explorerLayout.Name = "explorerLayout";
             // 
-            // splitContainer1.Panel1
+            // explorerLayout.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.fileTree);
+            this.explorerLayout.Panel1.Controls.Add(this.fileTree);
             // 
-            // splitContainer1.Panel2
+            // explorerLayout.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(933, 637);
-            this.splitContainer1.SplitterDistance = 190;
-            this.splitContainer1.TabIndex = 2;
+            this.explorerLayout.Panel2.Controls.Add(this.dataGridView1);
+            this.explorerLayout.Size = new System.Drawing.Size(921, 583);
+            this.explorerLayout.SplitterDistance = 187;
+            this.explorerLayout.TabIndex = 2;
             // 
             // dataGridView1
             // 
@@ -105,6 +111,7 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -112,7 +119,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微软雅黑 Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(739, 637);
+            this.dataGridView1.Size = new System.Drawing.Size(726, 583);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
@@ -152,35 +159,88 @@
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column2.Width = 81;
             // 
+            // borderLayoutPanel
+            // 
+            this.borderLayoutPanel.AutoSize = true;
+            this.borderLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.borderLayoutPanel.Controls.Add(this.addrLayoutPanel);
+            this.borderLayoutPanel.Controls.Add(this.explorerLayout);
+            this.borderLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.borderLayoutPanel.Location = new System.Drawing.Point(0, -1);
+            this.borderLayoutPanel.Name = "borderLayoutPanel";
+            this.borderLayoutPanel.Size = new System.Drawing.Size(927, 625);
+            this.borderLayoutPanel.TabIndex = 3;
+            // 
+            // addrLayoutPanel
+            // 
+            this.addrLayoutPanel.AutoSize = true;
+            this.addrLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addrLayoutPanel.Controls.Add(this.addrLineText);
+            this.addrLayoutPanel.Controls.Add(this.searchText);
+            this.addrLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.addrLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.addrLayoutPanel.MinimumSize = new System.Drawing.Size(100, 30);
+            this.addrLayoutPanel.Name = "addrLayoutPanel";
+            this.addrLayoutPanel.Size = new System.Drawing.Size(921, 30);
+            this.addrLayoutPanel.TabIndex = 1;
+            // 
+            // addrLineText
+            // 
+            this.addrLineText.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addrLineText.Location = new System.Drawing.Point(3, 3);
+            this.addrLineText.Name = "addrLineText";
+            this.addrLineText.ReadOnly = true;
+            this.addrLineText.Size = new System.Drawing.Size(739, 23);
+            this.addrLineText.TabIndex = 0;
+            // 
+            // searchText
+            // 
+            this.searchText.Dock = System.Windows.Forms.DockStyle.Right;
+            this.searchText.Location = new System.Drawing.Point(748, 3);
+            this.searchText.Name = "searchText";
+            this.searchText.Size = new System.Drawing.Size(170, 23);
+            this.searchText.TabIndex = 1;
+            this.searchText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchText_KeyPress);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(933, 637);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.borderLayoutPanel);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.Color.Transparent;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainWindow";
             this.Text = "迷之文件管理器";
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.Resize += new System.EventHandler(this.MainWindow_Resize);
+            this.explorerLayout.Panel1.ResumeLayout(false);
+            this.explorerLayout.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).EndInit();
+            this.explorerLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.borderLayoutPanel.ResumeLayout(false);
+            this.borderLayoutPanel.PerformLayout();
+            this.addrLayoutPanel.ResumeLayout(false);
+            this.addrLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         public System.Windows.Forms.TreeView fileTree;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer explorerLayout;
         public GridDataViewEx dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.FlowLayoutPanel borderLayoutPanel;
+        private System.Windows.Forms.FlowLayoutPanel addrLayoutPanel;
+        private System.Windows.Forms.TextBox addrLineText;
+        private System.Windows.Forms.TextBox searchText;
     }
 }
 
