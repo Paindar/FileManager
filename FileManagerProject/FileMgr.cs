@@ -349,21 +349,23 @@ namespace FileManagerProject
 
         public void save(string file)
         {
-            Stream fStream = new FileStream(file, FileMode.Create, FileAccess.ReadWrite);
+            Stream fStream = new FileStream(file, FileMode.Create, FileAccess.Write);
             BinaryFormatter binFormat = new BinaryFormatter();//创建二进制序列化器
-            Hashtable hash = new Hashtable();
-            hash.Add("files", files);
-            hash.Add("dirs", dirs);
-            hash.Add("tags", tags);
+            Hashtable hash = new Hashtable
+            {
+                { "files", files },
+                { "dirs", dirs },
+                { "tags", tags },
 
-            hash.Add("tagPairs", tagPairs);
+                { "tagPairs", tagPairs }
+            };
             binFormat.Serialize(fStream, hash);
             fStream.Close();
         }
         public void load(string file)
         {
             Hashtable hash = new Hashtable();
-            Stream fStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            Stream fStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read);
             BinaryFormatter binFormat = new BinaryFormatter();//创建二进制序列化器
             hash = (Hashtable)binFormat.Deserialize(fStream);//反序列化对象
             files = (List<FileItem>)hash["files"];
