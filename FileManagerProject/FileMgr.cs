@@ -377,6 +377,8 @@ namespace FileManagerProject
             tags = (List<TagItem>)hash["tags"];
             tagPairs = (List<TagPair>)hash["tagPairs"];
             fStream.Close();
+            List<TagItem> availableTags = tagPairs.Select(tp => tags.Find(tag=>tag.id==tp.tagId)).ToList();
+            tags = availableTags;
         }
     }
 }
