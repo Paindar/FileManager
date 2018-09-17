@@ -145,7 +145,7 @@ namespace FileManagerProject
             int index = files.FindIndex(i => i.id == fileId);
             if(index != -1)
             {
-                int tagId = tags.FindIndex(i => i.name.Equals(tag));
+                int tagId = tags.FindIndex(i => i.name==tag);
                 if(tagId == -1)
                 {
                     tagId = allocNewTag();
@@ -379,7 +379,8 @@ namespace FileManagerProject
             tags = (List<TagItem>)hash["tags"];
             tagPairs = (List<TagPair>)hash["tagPairs"];
             fStream.Close();
-            List<TagItem> availableTags = tagPairs.Select(tp => tags.Find(tag=>tag.id==tp.tagId)).ToList();
+            List<int> availTagIndex = tagPairs.Select(tp => tp.tagId).Distinct().ToList();
+            List<TagItem> availableTags = availTagIndex.Select(i => tags.Find(tag => tag.id == i)).ToList();
             tags = availableTags;
         }
     }
