@@ -68,14 +68,14 @@ namespace FileManagerProject
             string errorMsg = $"Exception Detail: {Environment.NewLine}{e.Exception}";
             MessageBox.Show(
                     $"Unexpected error, shadowsocks will exit. Please report to {Environment.NewLine}{errorMsg}",
-                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "FileManager UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             string errMsg = e.ExceptionObject.ToString();
             MessageBox.Show(
                     $"Unexpected error, shadowsocks will exit. Please report to {Environment.NewLine}{errMsg}",
-                    "Shadowsocks UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "FileManager UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private static void Application_ApplicationExit(object sender, EventArgs e)
         {

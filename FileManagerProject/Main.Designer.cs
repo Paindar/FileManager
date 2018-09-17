@@ -41,6 +41,9 @@
             this.addrLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addrLineText = new System.Windows.Forms.TextBox();
             this.searchText = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.调试选项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.所有标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).BeginInit();
             this.explorerLayout.Panel1.SuspendLayout();
             this.explorerLayout.Panel2.SuspendLayout();
@@ -48,6 +51,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.borderLayoutPanel.SuspendLayout();
             this.addrLayoutPanel.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileTree
@@ -165,10 +169,10 @@
             this.borderLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.borderLayoutPanel.Controls.Add(this.addrLayoutPanel);
             this.borderLayoutPanel.Controls.Add(this.explorerLayout);
-            this.borderLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.borderLayoutPanel.Location = new System.Drawing.Point(0, -1);
+            this.borderLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.borderLayoutPanel.Location = new System.Drawing.Point(0, 25);
             this.borderLayoutPanel.Name = "borderLayoutPanel";
-            this.borderLayoutPanel.Size = new System.Drawing.Size(927, 625);
+            this.borderLayoutPanel.Size = new System.Drawing.Size(933, 612);
             this.borderLayoutPanel.TabIndex = 3;
             // 
             // addrLayoutPanel
@@ -202,6 +206,32 @@
             this.searchText.TabIndex = 1;
             this.searchText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchText_KeyPress);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.调试选项ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(933, 25);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // 调试选项ToolStripMenuItem
+            // 
+            this.调试选项ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.所有标签ToolStripMenuItem});
+            this.调试选项ToolStripMenuItem.Name = "调试选项ToolStripMenuItem";
+            this.调试选项ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.调试选项ToolStripMenuItem.Text = "调试选项";
+            // 
+            // 所有标签ToolStripMenuItem
+            // 
+            this.所有标签ToolStripMenuItem.Name = "所有标签ToolStripMenuItem";
+            this.所有标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.所有标签ToolStripMenuItem.Text = "所有标签";
+            this.所有标签ToolStripMenuItem.Click += new System.EventHandler(this.allTagToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -210,6 +240,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(933, 637);
             this.Controls.Add(this.borderLayoutPanel);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.Color.Transparent;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -225,6 +256,8 @@
             this.borderLayoutPanel.PerformLayout();
             this.addrLayoutPanel.ResumeLayout(false);
             this.addrLayoutPanel.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,6 +274,9 @@
         private System.Windows.Forms.FlowLayoutPanel addrLayoutPanel;
         private System.Windows.Forms.TextBox addrLineText;
         private System.Windows.Forms.TextBox searchText;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 调试选项ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 所有标签ToolStripMenuItem;
     }
 }
 

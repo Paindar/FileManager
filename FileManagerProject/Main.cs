@@ -161,6 +161,16 @@ namespace FileManagerProject
                 }
             }
         }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void allTagToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(string.Join("|\n", FileMgr.fileMgr.getAllTags()));
+        }
     }
     class DirNode : TreeNode
     {

@@ -252,6 +252,10 @@ namespace FileManagerProject
             }
             return false;
         }
+        public List<string> getAllTags()
+        {
+            return tags.Select(tag => tag.name).ToList();
+        }
         public string getDirPath(int id)
         {
             int parId = id;
