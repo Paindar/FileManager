@@ -140,6 +140,8 @@ namespace FileManagerProject
         }
         public bool addTag(int fileId, string tag)
         {
+            if (tag == "")
+                return false;
             int index = files.FindIndex(i => i.id == fileId);
             if(index != -1)
             {
