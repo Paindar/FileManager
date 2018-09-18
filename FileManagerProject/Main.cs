@@ -153,26 +153,22 @@ namespace FileManagerProject
                     {
                         resultId.AddRange(l);
                     }
-                    List<FileItem> files = new List<FileItem>();
+                    List<FileItem> files = resultId.Select(f => FileMgr.fileMgr.getFile(f)).ToList();
                     if (dirRangeIndex != 0)
                     {
                         List<FileItem> subFiles = new List<FileItem>();
-                        Stack<int> s = new Stack<int>();
-                        s.Push(dirRangeIndex);
+                        Queue<int> s = new Queue<int>();
+                        s.Enqueue(dirRangeIndex);
                         while (s.Count != 0)
                         {
-                            int i = s.Pop();
+                            int i = s.Dequeue();
                             foreach (var di in FileMgr.fileMgr.getSubDirs(i))
                             {
-                                s.Push(di.id);
+                                s.Enqueue(di.id);
                             }
                             subFiles.AddRange(FileMgr.fileMgr.getFiles(i));
                         }
                         files = files.Intersect(subFiles).ToList() ;
-                    }
-                    else
-                    {
-                        files = resultId.Select(f => FileMgr.fileMgr.getFile(f)).ToList();
                     }
                     
                     this.dataGridView1.Rows.Clear();
