@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -143,6 +144,8 @@ namespace FileManagerProject
                 string[] context = this.searchText.Text.Split(' ');
                 if(context.Count() != 0)
                 {
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
                     DirNode node = this.fileTree.SelectedNode as DirNode;
                     int dirRangeIndex = 0;
                     if (node != null)
@@ -170,7 +173,9 @@ namespace FileManagerProject
                         }
                         files = files.Intersect(subFiles).ToList() ;
                     }
-                    
+                    watch.Stop();
+                    this.toolStripStatusLabel1.Text="用时 " + watch.ElapsedMilliseconds.ToString() + "ms.";
+
                     this.dataGridView1.Rows.Clear();
                     FileDataGridViewRow[] rows = files.Select(f =>
                     {
