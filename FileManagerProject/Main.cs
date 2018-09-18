@@ -143,12 +143,38 @@ namespace FileManagerProject
                 string[] context = this.searchText.Text.Split(' ');
                 if(context.Count() != 0)
                 {
+                    DirNode node = this.fileTree.SelectedNode as DirNode;
+                    int dirRangeIndex = 0;
+                    if (node != null)
+                        dirRangeIndex = node.info.id;
+
                     List<int> resultId = new List<int>();
                     foreach (var l in context.Select(tag => FileMgr.fileMgr.getFilesFromTag(tag)))
                     {
                         resultId.AddRange(l);
                     }
-                    List<FileItem> files = resultId.Select(f => FileMgr.fileMgr.getFile(f)).ToList();
+                    List<FileItem> files = new List<FileItem>();
+                    if (dirRangeIndex != 0)
+                    {
+                        List<FileItem> subFiles = new List<FileItem>();
+                        Stack<int> s = new Stack<int>();
+                        s.Push(dirRangeIndex);
+                        while (s.Count != 0)
+                        {
+                            int i = s.Pop();
+                            foreach (var di in FileMgr.fileMgr.getSubDirs(i))
+                            {
+                                s.Push(di.id);
+                            }
+                            subFiles.AddRange(FileMgr.fileMgr.getFiles(i));
+                        }
+                        files = files.Intersect(subFiles).ToList() ;
+                    }
+                    else
+                    {
+                        files = resultId.Select(f => FileMgr.fileMgr.getFile(f)).ToList();
+                    }
+                    
                     this.dataGridView1.Rows.Clear();
                     FileDataGridViewRow[] rows = files.Select(f =>
                     {
