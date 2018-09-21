@@ -12,6 +12,13 @@ namespace FileManagerProject
     {
         static string rootPath = "E:/GDriver";
         static MainWindow mainWindow;
+        static FileSystemWatcher fsWatcher = new FileSystemWatcher()
+        {
+            Path = rootPath,
+            IncludeSubdirectories = true,
+            NotifyFilter = NotifyFilters.FileName| NotifyFilters.DirectoryName
+        }
+        ;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -26,6 +33,7 @@ namespace FileManagerProject
             Application.ApplicationExit += Application_ApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             mainWindow = new MainWindow();
             FileMgr.fileMgr = new FileMgr(rootPath);
             if(File.Exists(Application.StartupPath + "/dir.dat"))
@@ -39,8 +47,16 @@ namespace FileManagerProject
             DirNode rootNode = new DirNode(FileMgr.fileMgr.getDirItem(0));
             mainWindow.fileTree.Nodes.Add(rootNode);
             initDirsData(0, rootNode);
+
+            fsWatcher.Created += FsWatcher_Created;
             Application.Run(mainWindow);
         }
+
+        private static void FsWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         public static void initialize(DirectoryInfo path, int dirId)
         {
             int curDir = dirId;

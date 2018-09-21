@@ -32,29 +32,34 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.fileTree = new System.Windows.Forms.TreeView();
             this.explorerLayout = new System.Windows.Forms.SplitContainer();
+            this.dataGridView1 = new FileManagerProject.GridDataViewEx();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.borderLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addrLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.addrLineText = new System.Windows.Forms.TextBox();
             this.searchText = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.剪切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.粘贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.调试选项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.所有标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dataGridView1 = new FileManagerProject.GridDataViewEx();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).BeginInit();
             this.explorerLayout.Panel1.SuspendLayout();
             this.explorerLayout.Panel2.SuspendLayout();
             this.explorerLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.borderLayoutPanel.SuspendLayout();
             this.addrLayoutPanel.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // fileTree
@@ -87,93 +92,6 @@
             this.explorerLayout.Size = new System.Drawing.Size(921, 583);
             this.explorerLayout.SplitterDistance = 187;
             this.explorerLayout.TabIndex = 2;
-            // 
-            // borderLayoutPanel
-            // 
-            this.borderLayoutPanel.AutoSize = true;
-            this.borderLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.borderLayoutPanel.Controls.Add(this.addrLayoutPanel);
-            this.borderLayoutPanel.Controls.Add(this.explorerLayout);
-            this.borderLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.borderLayoutPanel.Location = new System.Drawing.Point(0, 25);
-            this.borderLayoutPanel.Name = "borderLayoutPanel";
-            this.borderLayoutPanel.Size = new System.Drawing.Size(933, 612);
-            this.borderLayoutPanel.TabIndex = 3;
-            // 
-            // addrLayoutPanel
-            // 
-            this.addrLayoutPanel.AutoSize = true;
-            this.addrLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addrLayoutPanel.Controls.Add(this.addrLineText);
-            this.addrLayoutPanel.Controls.Add(this.searchText);
-            this.addrLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.addrLayoutPanel.Location = new System.Drawing.Point(3, 3);
-            this.addrLayoutPanel.MinimumSize = new System.Drawing.Size(100, 30);
-            this.addrLayoutPanel.Name = "addrLayoutPanel";
-            this.addrLayoutPanel.Size = new System.Drawing.Size(921, 30);
-            this.addrLayoutPanel.TabIndex = 1;
-            // 
-            // addrLineText
-            // 
-            this.addrLineText.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addrLineText.Location = new System.Drawing.Point(3, 3);
-            this.addrLineText.Name = "addrLineText";
-            this.addrLineText.ReadOnly = true;
-            this.addrLineText.Size = new System.Drawing.Size(739, 23);
-            this.addrLineText.TabIndex = 0;
-            // 
-            // searchText
-            // 
-            this.searchText.Dock = System.Windows.Forms.DockStyle.Right;
-            this.searchText.Location = new System.Drawing.Point(748, 3);
-            this.searchText.Name = "searchText";
-            this.searchText.Size = new System.Drawing.Size(170, 23);
-            this.searchText.TabIndex = 1;
-            this.searchText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchText_KeyPress);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.调试选项ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(933, 25);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
-            // 调试选项ToolStripMenuItem
-            // 
-            this.调试选项ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.所有标签ToolStripMenuItem});
-            this.调试选项ToolStripMenuItem.Name = "调试选项ToolStripMenuItem";
-            this.调试选项ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.调试选项ToolStripMenuItem.Text = "调试选项";
-            // 
-            // 所有标签ToolStripMenuItem
-            // 
-            this.所有标签ToolStripMenuItem.Name = "所有标签ToolStripMenuItem";
-            this.所有标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.所有标签ToolStripMenuItem.Text = "所有标签";
-            this.所有标签ToolStripMenuItem.Click += new System.EventHandler(this.allTagToolStripMenuItem_Click);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.BackColor = System.Drawing.Color.Transparent;
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 615);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(933, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // dataGridView1
             // 
@@ -253,6 +171,123 @@
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column2.Width = 81;
             // 
+            // borderLayoutPanel
+            // 
+            this.borderLayoutPanel.AutoSize = true;
+            this.borderLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.borderLayoutPanel.Controls.Add(this.addrLayoutPanel);
+            this.borderLayoutPanel.Controls.Add(this.explorerLayout);
+            this.borderLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.borderLayoutPanel.Location = new System.Drawing.Point(0, 25);
+            this.borderLayoutPanel.Name = "borderLayoutPanel";
+            this.borderLayoutPanel.Size = new System.Drawing.Size(933, 612);
+            this.borderLayoutPanel.TabIndex = 3;
+            // 
+            // addrLayoutPanel
+            // 
+            this.addrLayoutPanel.AutoSize = true;
+            this.addrLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addrLayoutPanel.Controls.Add(this.addrLineText);
+            this.addrLayoutPanel.Controls.Add(this.searchText);
+            this.addrLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.addrLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.addrLayoutPanel.MinimumSize = new System.Drawing.Size(100, 30);
+            this.addrLayoutPanel.Name = "addrLayoutPanel";
+            this.addrLayoutPanel.Size = new System.Drawing.Size(921, 30);
+            this.addrLayoutPanel.TabIndex = 1;
+            // 
+            // addrLineText
+            // 
+            this.addrLineText.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addrLineText.Location = new System.Drawing.Point(3, 3);
+            this.addrLineText.Name = "addrLineText";
+            this.addrLineText.ReadOnly = true;
+            this.addrLineText.Size = new System.Drawing.Size(739, 23);
+            this.addrLineText.TabIndex = 0;
+            // 
+            // searchText
+            // 
+            this.searchText.Dock = System.Windows.Forms.DockStyle.Right;
+            this.searchText.Location = new System.Drawing.Point(748, 3);
+            this.searchText.Name = "searchText";
+            this.searchText.Size = new System.Drawing.Size(170, 23);
+            this.searchText.TabIndex = 1;
+            this.searchText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchText_KeyPress);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.文件ToolStripMenuItem,
+            this.调试选项ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(933, 25);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
+            // 
+            // 文件ToolStripMenuItem
+            // 
+            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.剪切ToolStripMenuItem,
+            this.粘贴ToolStripMenuItem,
+            this.关闭ToolStripMenuItem});
+            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.文件ToolStripMenuItem.Text = "文件";
+            this.文件ToolStripMenuItem.Visible = false;
+            // 
+            // 剪切ToolStripMenuItem
+            // 
+            this.剪切ToolStripMenuItem.Name = "剪切ToolStripMenuItem";
+            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.剪切ToolStripMenuItem.Text = "剪切";
+            // 
+            // 粘贴ToolStripMenuItem
+            // 
+            this.粘贴ToolStripMenuItem.Name = "粘贴ToolStripMenuItem";
+            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.粘贴ToolStripMenuItem.Text = "粘贴";
+            // 
+            // 关闭ToolStripMenuItem
+            // 
+            this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
+            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.关闭ToolStripMenuItem.Text = "关闭";
+            // 
+            // 调试选项ToolStripMenuItem
+            // 
+            this.调试选项ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.所有标签ToolStripMenuItem});
+            this.调试选项ToolStripMenuItem.Name = "调试选项ToolStripMenuItem";
+            this.调试选项ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.调试选项ToolStripMenuItem.Text = "调试选项";
+            // 
+            // 所有标签ToolStripMenuItem
+            // 
+            this.所有标签ToolStripMenuItem.Name = "所有标签ToolStripMenuItem";
+            this.所有标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.所有标签ToolStripMenuItem.Text = "所有标签";
+            this.所有标签ToolStripMenuItem.Click += new System.EventHandler(this.allTagToolStripMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 615);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(933, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -265,6 +300,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.Color.Transparent;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainWindow";
             this.Text = "迷之文件管理器";
@@ -273,6 +309,7 @@
             this.explorerLayout.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).EndInit();
             this.explorerLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.borderLayoutPanel.ResumeLayout(false);
             this.borderLayoutPanel.PerformLayout();
             this.addrLayoutPanel.ResumeLayout(false);
@@ -281,7 +318,6 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +339,10 @@
         private System.Windows.Forms.ToolStripMenuItem 所有标签ToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 剪切ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 粘贴ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关闭ToolStripMenuItem;
     }
 }
 

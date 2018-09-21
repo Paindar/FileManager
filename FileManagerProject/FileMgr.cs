@@ -256,6 +256,11 @@ namespace FileManagerProject
         {
             return tags.Select(tag => tag.name).ToList();
         }
+        public DirItem getDirFromFullPath(string path)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
         public string getDirPath(int id)
         {
             int parId = id;
