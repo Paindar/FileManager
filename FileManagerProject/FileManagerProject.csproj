@@ -58,6 +58,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="network\NetworkSyncer.cs" />
     <Compile Include="PreviewWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,5 +98,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

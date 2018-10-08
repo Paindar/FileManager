@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManagerProject.network;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace FileManagerProject
             Application.ApplicationExit += Application_ApplicationExit;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //MessageBox.Show()
 
             mainWindow = new MainWindow();
             FileMgr.fileMgr = new FileMgr(rootPath);

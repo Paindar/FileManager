@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace FileManagerProject
@@ -301,14 +302,16 @@ namespace FileManagerProject
         }
         public List<string> getFileTags(int id)
         {
-            return tagPairs.FindAll(i => i.fileId == id)
-                .Select(pair => tags.Find(tag => tag.id == pair.tagId).name).ToList();
+            var res = tagPairs.FindAll(i => i.fileId == id)
+                .Select(pair => tags.Find(tag => tag.id == pair.tagId).name);
+            return res==null?new List<string>():res.ToList();
         }
         public List<TagItem> getFileTagsId(int id)
         {
             return tagPairs.FindAll(i => i.fileId == id)
                 .Select(pair=>tags.Find(tag=>tag.id==pair.tagId)).ToList();
         }
+        public string getRootName() { return dirs[0].name; }
         public List<DirItem> getSubDirs(int id)
         {
             return dirs.FindAll(i => i.parId == id);
@@ -320,6 +323,29 @@ namespace FileManagerProject
         public List<int> getFilesIndex(int id)
         {
             return files.FindAll(i => i.parId == id).Select(i => i.id).ToList();
+        }
+        public void recurse(Func<FileItem, Boolean> f, int maxThread)
+        {
+            Semaphore fileMudex = new Semaphore(maxThread, maxThread);
+            foreach(var item in files)
+            {
+                fileMudex.WaitOne();
+                Thread thread = new Thread(() =>
+                {
+                    f.Invoke(item);
+                    try
+                    {
+                        fileMudex.Release();
+                    }
+                    catch (Exception)
+                    {
+                        ;
+                    }
+                })
+                { IsBackground = true };
+               
+                thread.Start();
+            }
         }
         public bool removeTagFromFile(int fileId, int tagId)
         {
@@ -361,7 +387,6 @@ namespace FileManagerProject
             }
             return true;
         }
-
         public void save(string file)
         {
             Stream fStream = new FileStream(file, FileMode.Create, FileAccess.Write);

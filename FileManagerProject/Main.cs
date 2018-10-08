@@ -1,4 +1,5 @@
 ﻿
+using FileManagerProject.network;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -197,6 +198,77 @@ namespace FileManagerProject
         private void allTagToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(string.Join("|\n", FileMgr.fileMgr.getAllTags()));
+        }
+        
+
+        private void SyncFromServerButton_Click(object sender, EventArgs e)
+        {
+            Thread thr = new Thread(() =>
+            {
+                Hashtable hash = new Hashtable();
+                Mutex mutex = new Mutex(), tagMutex = new Mutex();
+                FileMgr.fileMgr.recurse((FileItem item) =>
+                {
+                    int parId = item.parId;
+                    try
+                    {
+                        mutex.WaitOne();
+                        if (!hash.ContainsKey(parId))
+                        {
+                            hash.Add(parId, FileMgr.fileMgr.getDirPath(parId));
+                        }
+                        mutex.ReleaseMutex();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    string tags = NetworkSyncer.getTagsFromServer((string)hash[parId] + '/' + item.name, Program.url).Result;
+                    tagMutex.WaitOne();
+                    foreach (var tag in tags.Split(' '))
+                    {
+                        if (tag != "")
+                        {
+                            FileMgr.fileMgr.addTag(item.id, tag);
+                        }
+                    }
+                    tagMutex.ReleaseMutex();
+                    return true;
+                }, 64);
+            })
+            {
+                IsBackground = true
+            };
+            thr.Start();
+        }
+
+        private void SyncToServerButton_Click(object sender, EventArgs e)
+        {
+            Hashtable hash = new Hashtable();
+            Mutex mutex = new Mutex();
+            FileMgr.fileMgr.recurse((FileItem item) =>
+            {
+                int parId = item.parId;
+                try
+                {
+                    mutex.WaitOne();
+                    if (!hash.ContainsKey(parId))
+                    {
+                        hash.Add(parId, FileMgr.fileMgr.getDirPath(parId));
+                    }
+                    mutex.ReleaseMutex();
+                }
+                catch(Exception)
+                {
+
+                }
+                var tags = FileMgr.fileMgr.getFileTags(item.id);
+                if(tags.Count!=0)
+                {
+                    bool b = NetworkSyncer.uploadTagsToServer((string)hash[parId] + '/' + item.name, tags, Program.url).Result;
+                }
+                return true;
+            }, 16);
         }
     }
     class DirNode : TreeNode

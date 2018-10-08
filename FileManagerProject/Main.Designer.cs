@@ -49,6 +49,9 @@
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.调试选项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.所有标签ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.同步ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SyncFromServerButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.SyncToServerButton = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).BeginInit();
@@ -218,7 +221,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
-            this.调试选项ToolStripMenuItem});
+            this.调试选项ToolStripMenuItem,
+            this.同步ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(933, 25);
@@ -269,6 +273,30 @@
             this.所有标签ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.所有标签ToolStripMenuItem.Text = "所有标签";
             this.所有标签ToolStripMenuItem.Click += new System.EventHandler(this.allTagToolStripMenuItem_Click);
+            // 
+            // 同步ToolStripMenuItem
+            // 
+            this.同步ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SyncFromServerButton,
+            this.SyncToServerButton});
+            this.同步ToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.同步ToolStripMenuItem.Name = "同步ToolStripMenuItem";
+            this.同步ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.同步ToolStripMenuItem.Text = "同步";
+            // 
+            // SyncFromServerButton
+            // 
+            this.SyncFromServerButton.Name = "SyncFromServerButton";
+            this.SyncFromServerButton.Size = new System.Drawing.Size(180, 22);
+            this.SyncFromServerButton.Text = "从服务器同步";
+            this.SyncFromServerButton.Click += new System.EventHandler(this.SyncFromServerButton_Click);
+            // 
+            // SyncToServerButton
+            // 
+            this.SyncToServerButton.Name = "SyncToServerButton";
+            this.SyncToServerButton.Size = new System.Drawing.Size(180, 22);
+            this.SyncToServerButton.Text = "同步到服务器";
+            this.SyncToServerButton.Click += new System.EventHandler(this.SyncToServerButton_Click);
             // 
             // statusStrip1
             // 
@@ -343,6 +371,9 @@
         private System.Windows.Forms.ToolStripMenuItem 剪切ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 粘贴ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关闭ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 同步ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SyncFromServerButton;
+        private System.Windows.Forms.ToolStripMenuItem SyncToServerButton;
     }
 }
 
