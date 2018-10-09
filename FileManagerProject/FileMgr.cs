@@ -324,14 +324,17 @@ namespace FileManagerProject
         {
             return files.FindAll(i => i.parId == id).Select(i => i.id).ToList();
         }
-        public void recurse(Func<FileItem, Boolean> f, int maxThread)
+        public void recurse(Func<FileItem, Boolean> f, int maxThread, Func<float, bool> callback)
         {
             Semaphore fileMudex = new Semaphore(maxThread, maxThread);
+            int i = 0;
             foreach(var item in files)
             {
                 fileMudex.WaitOne();
+                i++;
                 Thread thread = new Thread(() =>
                 {
+                    float prog = 1.0f / files.Count;
                     f.Invoke(item);
                     try
                     {
@@ -341,6 +344,7 @@ namespace FileManagerProject
                     {
                         ;
                     }
+                    callback.Invoke(prog);
                 })
                 { IsBackground = true };
                
@@ -402,20 +406,30 @@ namespace FileManagerProject
             binFormat.Serialize(fStream, hash);
             fStream.Close();
         }
-        public void load(string file)
+        public bool load(string file)
         {
             Hashtable hash = new Hashtable();
             Stream fStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.Read);
             BinaryFormatter binFormat = new BinaryFormatter();//创建二进制序列化器
-            hash = (Hashtable)binFormat.Deserialize(fStream);//反序列化对象
-            files = (List<FileItem>)hash["files"];
-            dirs = (List<DirItem>)hash["dirs"];
-            tags = (List<TagItem>)hash["tags"];
-            tagPairs = (List<TagPair>)hash["tagPairs"];
-            fStream.Close();
+            try
+            {
+                hash = (Hashtable)binFormat.Deserialize(fStream);//反序列化对象
+                files = (List<FileItem>)hash["files"];
+                dirs = (List<DirItem>)hash["dirs"];
+                tags = (List<TagItem>)hash["tags"];
+                tagPairs = (List<TagPair>)hash["tagPairs"];
+                fStream.Close();
+            }
+            catch(Exception e)
+            {
+                fStream.Close();
+                //todo Error report
+                return false;
+            }
             List<int> availTagIndex = tagPairs.Select(tp => tp.tagId).Distinct().ToList();
             List<TagItem> availableTags = availTagIndex.Select(i => tags.Find(tag => tag.id == i)).ToList();
             tags = availableTags;
+            return true;
         }
     }
 }

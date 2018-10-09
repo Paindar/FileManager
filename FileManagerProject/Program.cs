@@ -12,6 +12,7 @@ namespace FileManagerProject
     static class Program
     {
         static string rootPath = "E:/GDriver";
+        public static string url = "http://139.199.206.70:8888";
         static MainWindow mainWindow;
         static FileSystemWatcher fsWatcher = new FileSystemWatcher()
         {
@@ -38,9 +39,8 @@ namespace FileManagerProject
 
             mainWindow = new MainWindow();
             FileMgr.fileMgr = new FileMgr(rootPath);
-            if(File.Exists(Application.StartupPath + "/dir.dat"))
+            if(File.Exists(Application.StartupPath + "/dir.dat") && FileMgr.fileMgr.load(Application.StartupPath + "/dir.dat"))
             {
-                FileMgr.fileMgr.load(Application.StartupPath + "/dir.dat");
             }
             else
             {

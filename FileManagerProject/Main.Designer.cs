@@ -54,6 +54,7 @@
             this.SyncToServerButton = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.explorerLayout)).BeginInit();
             this.explorerLayout.Panel1.SuspendLayout();
             this.explorerLayout.Panel2.SuspendLayout();
@@ -287,22 +288,23 @@
             // SyncFromServerButton
             // 
             this.SyncFromServerButton.Name = "SyncFromServerButton";
-            this.SyncFromServerButton.Size = new System.Drawing.Size(180, 22);
+            this.SyncFromServerButton.Size = new System.Drawing.Size(148, 22);
             this.SyncFromServerButton.Text = "从服务器同步";
             this.SyncFromServerButton.Click += new System.EventHandler(this.SyncFromServerButton_Click);
             // 
             // SyncToServerButton
             // 
             this.SyncToServerButton.Name = "SyncToServerButton";
-            this.SyncToServerButton.Size = new System.Drawing.Size(180, 22);
+            this.SyncToServerButton.Size = new System.Drawing.Size(148, 22);
             this.SyncToServerButton.Text = "同步到服务器";
             this.SyncToServerButton.Click += new System.EventHandler(this.SyncToServerButton_Click);
             // 
             // statusStrip1
             // 
-            this.statusStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.statusStrip1.BackColor = System.Drawing.Color.White;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 615);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(933, 22);
@@ -315,6 +317,11 @@
             this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Black;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
             // MainWindow
             // 
@@ -374,6 +381,7 @@
         private System.Windows.Forms.ToolStripMenuItem 同步ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SyncFromServerButton;
         private System.Windows.Forms.ToolStripMenuItem SyncToServerButton;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
 

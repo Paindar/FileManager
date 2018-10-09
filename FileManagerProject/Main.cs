@@ -14,6 +14,7 @@ namespace FileManagerProject
     {
         private List<KeyValuePair<double, double>> sizePer;
         private double splitterDstPer;
+        private float progessFloat = 0.00f;
         Hashtable hash = new Hashtable();
         Thread threadPreWin = new Thread(obj =>
         {
@@ -234,7 +235,20 @@ namespace FileManagerProject
                     }
                     tagMutex.ReleaseMutex();
                     return true;
-                }, 64);
+                }, 64, (float prog) => {
+                    try
+                    {
+                        mutex.WaitOne();
+                        progessFloat += prog;
+                        this.toolStripProgressBar1.Value = (int)(progessFloat * 100);
+                        mutex.ReleaseMutex();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    return true;
+                });
             })
             {
                 IsBackground = true
@@ -245,18 +259,18 @@ namespace FileManagerProject
         private void SyncToServerButton_Click(object sender, EventArgs e)
         {
             Hashtable hash = new Hashtable();
-            Mutex mutex = new Mutex();
+            Mutex mgrMutex = new Mutex(), mutex = new Mutex();
             FileMgr.fileMgr.recurse((FileItem item) =>
             {
                 int parId = item.parId;
                 try
                 {
-                    mutex.WaitOne();
+                    mgrMutex.WaitOne();
                     if (!hash.ContainsKey(parId))
                     {
                         hash.Add(parId, FileMgr.fileMgr.getDirPath(parId));
                     }
-                    mutex.ReleaseMutex();
+                    mgrMutex.ReleaseMutex();
                 }
                 catch(Exception)
                 {
@@ -268,7 +282,21 @@ namespace FileManagerProject
                     bool b = NetworkSyncer.uploadTagsToServer((string)hash[parId] + '/' + item.name, tags, Program.url).Result;
                 }
                 return true;
-            }, 16);
+            }, 16,(float prog)=> {
+                try
+                {
+                    mutex.WaitOne();
+                    progessFloat += prog;
+                    this.toolStripProgressBar1.Value = (int)(progessFloat * 100);
+                    mutex.ReleaseMutex();
+                }
+                catch (Exception)
+                {
+
+                }
+                return true;
+            }
+            );
         }
     }
     class DirNode : TreeNode
